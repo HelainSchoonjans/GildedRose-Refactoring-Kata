@@ -26,6 +26,27 @@ class GildedRoseSpec extends Specification {
         0      | 10      | 0               | "drop quality to zero after the concert"
     }
 
+    def "should update conjured item quality twice as fast"() {
+        given: "some items"
+        Item[] items = [new Item("Conjured", sellIn, quality)]
+
+        and: "the application with these items"
+        GildedRose app = new GildedRose(items)
+
+        when: "updating quality"
+        app.updateQuality()
+
+        then: "the quality is correct"
+        app.items[0].quality == expectedQuality
+
+        where:
+        sellIn | quality | expectedQuality
+        10     | 10      | 8
+        10     | 5       | 3
+        0      | 10      | 6
+        0      | 3       | 0
+    }
+
     def "should increase quality for aged brie"() {
         given: "some items"
         Item[] items = [new Item(name, sellIn, quality)]

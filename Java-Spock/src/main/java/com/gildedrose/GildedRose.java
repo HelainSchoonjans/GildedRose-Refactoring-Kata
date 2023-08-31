@@ -44,6 +44,8 @@ class GildedRose {
             if (item.sellIn < 6) {
                 incrementQuality(item);
             }
+        } else if(item.name.equals("Conjured")){
+            increaseQuality(item, -2);
         } else {
             decrementQuality(item);
         }
