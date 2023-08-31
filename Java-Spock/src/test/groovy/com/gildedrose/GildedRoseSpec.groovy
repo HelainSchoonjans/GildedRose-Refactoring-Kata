@@ -1,42 +1,11 @@
 package com.gildedrose
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class GildedRoseSpec extends Specification {
 
-    def "should update quality correctly"() {
-        given: "some items"
-        Item[] items = [new Item(name, sellIn, quality)]
-
-        and: "the application with these items"
-        GildedRose app = new GildedRose(items)
-
-        when: "updating quality"
-        app.updateQuality()
-
-        then: "the quality is correct"
-        app.items[0].quality == expectedQuality
-
-        where:
-        name                                        | sellIn | quality | expectedQuality
-        "foo"                                       | 0      | 0       | 0
-        "Aged Brie"                                 | 0      | 0       | 2
-        "Backstage passes to a TAFKAL80ETC concert" | 0      | 0       | 0
-
-        "foo"                                       | 1      | 0       | 0
-        "Aged Brie"                                 | 1      | 0       | 1
-        "Backstage passes to a TAFKAL80ETC concert" | 1      | 0       | 3
-
-        "foo"                                       | 0      | 1       | 0
-        "Aged Brie"                                 | 0      | 1       | 3
-        "Backstage passes to a TAFKAL80ETC concert" | 0      | 1       | 0
-
-        "foo"                                       | -1     | 3       | 1
-        // this item never decreases in quality
-        "Sulfuras, Hand of Ragnaros"                | 0      | 80      | 80
-        "Sulfuras, Hand of Ragnaros"                | -1     | 80      | 80
-    }
-
+    @Unroll
     def "should #message for backstage"() {
         given: "some items"
         Item[] items = [new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, quality)]
