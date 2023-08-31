@@ -14,43 +14,37 @@ class GildedRose {
     }
 
     private void update(Item item) {
-        if (!item.name.equals("Aged Brie")
-                && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            decrementQuality(item);
-        } else {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-
-                if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                }
-            }
-        }
-
+        degradeQuality(item);
         decrementSellIn(item);
-
         if (hasSellDatePassed(item)) {
-            if (!item.name.equals("Aged Brie")) {
-                if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    decrementQuality(item);
-                } else {
-                    item.quality = 0;
-                }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-                }
+            degradeQuality(item);
+        }
+    }
+
+    private static void degradeQuality(Item item) {
+        if (item.name.equals("Aged Brie")) {
+            increaseQuality(item);
+        } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            if(item.sellIn < 0) {
+                item.quality = 0;
+                return;
             }
+            increaseQuality(item);
+            if (item.sellIn < 11) {
+                increaseQuality(item);
+            }
+
+            if (item.sellIn < 6) {
+                increaseQuality(item);
+            }
+        } else {
+            decrementQuality(item);
+        }
+    }
+
+    private static void increaseQuality(Item item) {
+        if (item.quality < 50) {
+            item.quality = item.quality + 1;
         }
     }
 
