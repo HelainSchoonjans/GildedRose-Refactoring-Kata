@@ -34,17 +34,14 @@ class GildedRose {
         } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
             if (item.sellIn < 0) {
                 degradeQualityToZero(item);
-                return;
-            }
-            incrementQuality(item);
-            if (item.sellIn < 11) {
+            } else if (item.sellIn < 6) {
+                increaseQuality(item, 3);
+            } else if (item.sellIn < 11) {
+                increaseQuality(item, 2);
+            } else {
                 incrementQuality(item);
             }
-
-            if (item.sellIn < 6) {
-                incrementQuality(item);
-            }
-        } else if(item.name.equals("Conjured")){
+        } else if (item.name.startsWith("Conjured")) {
             increaseQuality(item, -2);
         } else {
             decrementQuality(item);

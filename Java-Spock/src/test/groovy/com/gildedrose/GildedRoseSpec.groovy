@@ -21,6 +21,7 @@ class GildedRoseSpec extends Specification {
 
         where:
         sellIn | quality | expectedQuality | message
+        11     | 0       | 1               | "increase quality by one if there is more than ten days"
         10     | 0       | 2               | "increase quality by two if there is ten days of less"
         2      | 0       | 3               | "increase quality by three if there is five days of less"
         0      | 10      | 0               | "drop quality to zero after the concert"
@@ -28,7 +29,7 @@ class GildedRoseSpec extends Specification {
 
     def "should update conjured item quality twice as fast"() {
         given: "some items"
-        Item[] items = [new Item("Conjured", sellIn, quality)]
+        Item[] items = [new Item("Conjured Mana Cake", sellIn, quality)]
 
         and: "the application with these items"
         GildedRose app = new GildedRose(items)
