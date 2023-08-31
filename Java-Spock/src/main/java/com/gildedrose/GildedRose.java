@@ -1,7 +1,9 @@
 package com.gildedrose;
 
+import static java.lang.Math.*;
+
 class GildedRose {
-    public static final int MININUM_QUALITY = 0;
+    public static final int MINIMUM_QUALITY = 0;
     public static final int MAXIMUM_QUALITY = 50;
     Item[] items;
 
@@ -48,7 +50,7 @@ class GildedRose {
     }
 
     private static void increaseQuality(Item item) {
-        item.quality = Math.min(item.quality + 1, MAXIMUM_QUALITY);
+        item.quality = min(item.quality + 1, MAXIMUM_QUALITY);
     }
 
     private static boolean hasSellDatePassed(Item item) {
@@ -60,7 +62,7 @@ class GildedRose {
     }
 
     private static void decrementQuality(Item item) {
-        item.quality = Math.max(MININUM_QUALITY, item.quality - 1);
+        item.quality = max(MINIMUM_QUALITY, item.quality - 1);
     }
 
     private static boolean isLegendary(Item item) {
