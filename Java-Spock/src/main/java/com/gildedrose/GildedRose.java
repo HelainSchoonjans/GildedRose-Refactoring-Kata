@@ -1,6 +1,8 @@
 package com.gildedrose;
 
 class GildedRose {
+    public static final int MININUM_QUALITY = 0;
+    public static final int MAXIMUM_QUALITY = 50;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -14,6 +16,9 @@ class GildedRose {
     }
 
     private void update(Item item) {
+        if (isLegendary(item)) {
+            return;
+        }
         degradeQuality(item);
         decrementSellIn(item);
         if (hasSellDatePassed(item)) {
@@ -25,7 +30,7 @@ class GildedRose {
         if (item.name.equals("Aged Brie")) {
             increaseQuality(item);
         } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            if(item.sellIn < 0) {
+            if (item.sellIn < 0) {
                 item.quality = 0;
                 return;
             }
@@ -43,9 +48,7 @@ class GildedRose {
     }
 
     private static void increaseQuality(Item item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1;
-        }
+        item.quality = Math.min(item.quality + 1, MAXIMUM_QUALITY);
     }
 
     private static boolean hasSellDatePassed(Item item) {
@@ -53,19 +56,11 @@ class GildedRose {
     }
 
     private static void decrementSellIn(Item item) {
-        if (isOrdinaryItem(item)) {
-            item.sellIn = item.sellIn - 1;
-        }
-    }
-
-    private static boolean isOrdinaryItem(Item item) {
-        return !isLegendary(item);
+        item.sellIn = item.sellIn - 1;
     }
 
     private static void decrementQuality(Item item) {
-        if (item.quality > 0 && isOrdinaryItem(item)) {
-            item.quality = item.quality - 1;
-        }
+        item.quality = Math.max(MININUM_QUALITY, item.quality - 1);
     }
 
     private static boolean isLegendary(Item item) {
