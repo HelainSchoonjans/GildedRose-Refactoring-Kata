@@ -30,27 +30,35 @@ class GildedRose {
 
     private static void degradeQuality(Item item) {
         if (item.name.equals("Aged Brie")) {
-            increaseQuality(item);
+            incrementQuality(item);
         } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
             if (item.sellIn < 0) {
                 item.quality = 0;
                 return;
             }
-            increaseQuality(item);
+            incrementQuality(item);
             if (item.sellIn < 11) {
-                increaseQuality(item);
+                incrementQuality(item);
             }
 
             if (item.sellIn < 6) {
-                increaseQuality(item);
+                incrementQuality(item);
             }
         } else {
             decrementQuality(item);
         }
     }
 
-    private static void increaseQuality(Item item) {
-        item.quality = min(item.quality + 1, MAXIMUM_QUALITY);
+    private static void decrementQuality(Item item) {
+        increaseQuality(item, -1);
+    }
+
+    private static void incrementQuality(Item item) {
+        increaseQuality(item, 1);
+    }
+
+    private static void increaseQuality(Item item, int amount) {
+        item.quality = max(MINIMUM_QUALITY, min(item.quality + amount, MAXIMUM_QUALITY));
     }
 
     private static boolean hasSellDatePassed(Item item) {
@@ -59,10 +67,6 @@ class GildedRose {
 
     private static void decrementSellIn(Item item) {
         item.sellIn = item.sellIn - 1;
-    }
-
-    private static void decrementQuality(Item item) {
-        item.quality = max(MINIMUM_QUALITY, item.quality - 1);
     }
 
     private static boolean isLegendary(Item item) {
